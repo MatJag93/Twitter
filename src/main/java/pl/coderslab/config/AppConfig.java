@@ -1,5 +1,10 @@
 package pl.coderslab.config;
 
+import java.util.Locale;
+
+import javax.persistence.EntityManagerFactory;
+import javax.validation.Validator;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -15,10 +20,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-import javax.persistence.EntityManagerFactory;
-import javax.validation.Validator;
-import java.util.Locale;
-
 @Configuration
 @ComponentScan(basePackages = "pl.coderslab")
 @EnableWebMvc
@@ -28,7 +29,7 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 	@Bean
 	public LocalEntityManagerFactoryBean entityManagerFactory() {
 		LocalEntityManagerFactoryBean emfb = new LocalEntityManagerFactoryBean();
-		emfb.setPersistenceUnitName("TestPersistenceUnit");
+		emfb.setPersistenceUnitName("warsztatPersistenceUnit");
 		return emfb;
 	}
 
@@ -46,8 +47,7 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 		return viewResolver;
 	}
 
-
-	@Bean(name="localeResolver")
+	@Bean(name = "localeResolver")
 	public LocaleContextResolver getLocaleContextResolver() {
 		SessionLocaleResolver localeResolver = new SessionLocaleResolver();
 		localeResolver.setDefaultLocale(new Locale("pl", "PL"));
@@ -58,5 +58,4 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 	public Validator validator() {
 		return new LocalValidatorFactoryBean();
 	}
-
 }
